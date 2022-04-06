@@ -15,12 +15,12 @@ def create(name, age, date, medicines):
         raise Exception('No name found')
     document = Document()
     para = document.add_heading("")
-    runn = para.add_run("HealthCare Hospitals \n")
+    run = para.add_run("HealthCare Hospitals \n")
     run = para.add_run(
-        " Dr.Rishi Raj M.D.(Neurology) \t \t Dr.Swathy M.S.(Ortho) \t Dr.Shreevarshann M.S.(Ophthalmology) \n No.20,Blossom Avenue,Madura \n Ph:0452-2588 1522 \n")
+        " Dr.Rishi Raj M.D.(Neurology) \t Dr.Rishi Kumar M.S.(Ortho) \t Dr.Swetha varnaa M.S.(Ophthalmology) \n No.20,Blossom Avenue,Chennai \n Ph:0452-2588 1522 \n")
     font = run.font
-    runn.font.size = Pt(18)
-    runn.font.color.rgb = RGBColor(153, 17, 150)
+    run.font.size = Pt(18)
+    run.font.color.rgb = RGBColor(153, 17, 150)
     font.size = Pt(16)
     font.color.rgb = RGBColor(217, 17, 213)
     para.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
@@ -37,8 +37,8 @@ def create(name, age, date, medicines):
     run3 = para3.add_run("Date:{}".format(date))
     run3.font.size = Pt(14)
 
-    if (len(medicines) == 0):
-        messagebox.showinfo("Alert", "Please include atleast one tablet")
+    if len(medicines) == 0:
+        messagebox.showinfo("Alert", "Please include atleast one medicine")
     else:
         table = document.add_table(len(medicines), 5)
 
@@ -47,14 +47,13 @@ def create(name, age, date, medicines):
         heading_cells[1].text = 'Dosage(mg)'
         heading_cells[2].text = 'Frequency'
         heading_cells[3].text = 'Duration'
-        heading_cells[4].text = 'No.of.times per day'
 
         for i in range(len(medicines)):
             cells = table.add_row().cells
-            cells[0].text = medicines[i]["DRUG"]
-            cells[1].text = medicines[i]["STRENGTH"]
-            cells[2].text = medicines[i]["FREQUENCY"]
-            cells[3].text = medicines[i]["DURATION"]
+            cells[0].text = medicines[i]["DRUG"].capitalize()
+            cells[1].text = medicines[i]["STRENGTH"].capitalize()
+            cells[2].text = medicines[i]["FREQUENCY"].capitalize()
+            cells[3].text = medicines[i]["DURATION"].capitalize()
     # for space
 
     header = document.sections[0].footer
@@ -70,5 +69,6 @@ def create(name, age, date, medicines):
                         "Success! Please verify the document generated and click upload \n Document Name:{}.docx".format(
                             name))
 
+
 if __name__ == "__main__":
-    create("new_test", "20", "20-10-2020", [["tab1", "10", "3", "After", "1-0-1"]], [])
+    create("kumar", "20", "20-10-2020", [{'DRUG': 'paracetamol', 'STRENGTH': '500mg', 'FREQUENCY': 'thrice', 'DURATION': 'for 5 days'}, {'DRUG': 'Amoxicillin', 'STRENGTH': '650mg', 'FREQUENCY': 'night', 'DURATION': 'for 2 days'}])
